@@ -53,3 +53,6 @@ flipMoodNft:
 
 zkdeploy: 
 	@forge create src/OurToken.sol:OurToken --rpc-url http://127.0.0.1:8011 --private-key $(DEFAULT_ZKSYNC_LOCAL_KEY) --legacy --zksync
+
+mintMood:
+	cast send 0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266 "mintNft()" --private-key pasteYourPrivateKey --rpc-url pasteYourRpcUrl
