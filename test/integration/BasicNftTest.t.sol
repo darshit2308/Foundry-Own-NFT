@@ -21,7 +21,7 @@ contract BasicNftTest is Test {
         string memory actualName = basicNft.name();
         // assertEq(expectedName,actualName); -> this works for strings comparison, dont know why..
         // assert(keccak256(abi.encodePacked(expectedName)) == keccak256(abi.encodePacked(actualName)));
-        assertEq(expectedName , actualName);
+        assertEq(expectedName, actualName);
     }
 
     function testCanMintAndHaveBalance() public {

@@ -3,7 +3,7 @@ pragma solidity ^0.8.26;
 
 import {ERC721} from "../lib/openzeppelin-contracts/contracts/token/ERC721/ERC721.sol";
 import {Base64} from "../lib/openzeppelin-contracts/contracts/utils/Base64.sol";
-import {console} from '../lib/forge-std/src/console.sol';
+import {console} from "../lib/forge-std/src/console.sol";
 
 contract MoodNft is ERC721 {
     uint256 private s_tokenCounter;
@@ -14,20 +14,16 @@ contract MoodNft is ERC721 {
     error MoodNft__CantFlipMoodIfNotOwner();
 
     enum Mood {
-        HAPPY,// console.log(Mood.HAPPY) -> Returns 0
-        SAD   // console.log(Mood.SAD) -> Returns 1
+        HAPPY, // console.log(Mood.HAPPY) -> Returns 0
+        SAD // console.log(Mood.SAD) -> Returns 1
+
     }
-    
-    
 
     mapping(uint256 => Mood) private s_tokenIdToMood;
     // If 0 -> Happy
     // If 1 -> Sas
 
-    constructor(
-        string memory sadSvgImageUri,
-        string memory happySvgImageUri
-    ) ERC721("Mood NFT", "MN") {
+    constructor(string memory sadSvgImageUri, string memory happySvgImageUri) ERC721("Mood NFT", "MN") {
         s_tokenCounter = 0;
         s_sadSvgImageUri = sadSvgImageUri;
         s_happySvgImageUri = happySvgImageUri;
@@ -40,16 +36,14 @@ contract MoodNft is ERC721 {
         s_tokenCounter++;
     }
     // Mood Flipping
+
     function flipMood(uint256 tokenId) public {
-        
         if (getApproved(tokenId) != msg.sender && ownerOf(tokenId) != msg.sender) {
             revert MoodNft__CantFlipMoodIfNotOwner();
         }
 
         if (s_tokenIdToMood[tokenId] == Mood.HAPPY) {
-
             s_tokenIdToMood[tokenId] = Mood.SAD;
-            
         } else {
             s_tokenIdToMood[tokenId] = Mood.HAPPY;
         }
@@ -59,9 +53,7 @@ contract MoodNft is ERC721 {
         return "data:application/json;base64,"; // Note that it is different
     }
 
-    function tokenURI(
-        uint256 tokenId
-    ) public view override returns (string memory) {
+    function tokenURI(uint256 tokenId) public view override returns (string memory) {
         string memory imageURI;
         if (s_tokenIdToMood[tokenId] == Mood.HAPPY) {
             imageURI = s_happySvgImageUri;
@@ -86,6 +78,5 @@ contract MoodNft is ERC721 {
                 )
             )
         );
-
     }
 }
